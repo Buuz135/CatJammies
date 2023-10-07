@@ -1,44 +1,45 @@
 package com.buuz135.catjammies;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.model.CatModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.CatModel;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 
-public class CatJammiesCatRenderer extends MobRenderer<CatEntity, CatModel<CatEntity>> {
+public class CatJammiesCatRenderer extends MobRenderer<Cat, CatModel<Cat>> {
 
-	public CatJammiesCatRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new CatJammiesCatModel<>(0.0F), 0.4F);
-		this.addLayer(new CatJammiesCatCollarLayer(this));
+	public CatJammiesCatRenderer(EntityRendererProvider.Context context) {
+		super(context, new CatJammiesCatModel<>(context.bakeLayer(ModelLayers.CAT)), 0.4F);
+		this.addLayer(new CatJammiesCatCollarLayer(this, context.getModelSet()));
 	}
 
-	public ResourceLocation getTextureLocation(CatEntity catEntity) {
-		return catEntity.getResourceLocation();
+	public ResourceLocation getTextureLocation(Cat cat) {
+		return cat.getResourceLocation();
 	}
 
-	protected void scale(CatEntity catEntity, MatrixStack matrixStack, float partialTickTime) {
-		super.scale(catEntity, matrixStack, partialTickTime);
-		matrixStack.scale(0.8F, 0.8F, 0.8F);
+	protected void scale(Cat cat, PoseStack poseStack, float partialTickTime) {
+		super.scale(cat, poseStack, partialTickTime);
+		poseStack.scale(0.8F, 0.8F, 0.8F);
 	}
 
-	protected void setupRotations(CatEntity catEntity, MatrixStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
-		super.setupRotations(catEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
-		float f = catEntity.getLieDownAmount(partialTicks);
+	protected void setupRotations(Cat cat, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+		super.setupRotations(cat, poseStack, ageInTicks, rotationYaw, partialTicks);
+		float f = cat.getLieDownAmount(partialTicks);
 		if (f > 0.0F) {
-			matrixStack.translate((double) (0.4F * f), (double) (0.15F * f), (double) (0.1F * f));
-			matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.rotLerp(f, 0.0F, 90.0F)));
-			BlockPos blockpos = catEntity.blockPosition();
+			poseStack.translate((double) (0.4F * f), (double) (0.15F * f), (double) (0.1F * f));
+			poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.rotLerp(f, 0.0F, 90.0F)));
+			BlockPos blockpos = cat.blockPosition();
 
-			for (PlayerEntity playerentity : catEntity.level.getEntitiesOfClass(PlayerEntity.class, (new AxisAlignedBB(blockpos)).inflate(2.0, 2.0, 2.0))) {
+			for (Player playerentity : cat.level.getEntitiesOfClass(Player.class, (new AABB(blockpos)).inflate(2.0, 2.0, 2.0))) {
 				if (playerentity.isSleeping()) {
-					matrixStack.translate((double) (0.15F * f), 0.0, 0.0);
+					poseStack.translate((double) (0.15F * f), 0.0, 0.0);
 					break;
 				}
 			}

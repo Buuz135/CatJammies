@@ -1,13 +1,14 @@
 package com.buuz135.catjammies;
 
-import net.minecraft.client.renderer.entity.model.CatModel;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.CatModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.Cat;
 
-public class CatJammiesCatModel<T extends CatEntity> extends CatModel<T> {
+public class CatJammiesCatModel<T extends Cat> extends CatModel<T> {
 
-	public CatJammiesCatModel(float p_i51069_1_) {
-		super(p_i51069_1_);
+	public CatJammiesCatModel(ModelPart modelPart) {
+		super(modelPart);
 	}
 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -18,9 +19,9 @@ public class CatJammiesCatModel<T extends CatEntity> extends CatModel<T> {
 			return value;
 		}).sum();
 		if (jamAmount > 0) {
-			this.head.xRot = MathHelper.sin(ageInTicks) * 0.2F * (float) jamAmount;
-			this.head.zRot = MathHelper.cos(ageInTicks) * 0.01F * (float) jamAmount;
-			this.head.yRot = MathHelper.cos(ageInTicks) * 0.01F * (float) jamAmount;
+			this.head.xRot = Mth.sin(ageInTicks) * 0.2F * (float) jamAmount;
+			this.head.zRot = Mth.cos(ageInTicks) * 0.01F * (float) jamAmount;
+			this.head.yRot = Mth.cos(ageInTicks) * 0.01F * (float) jamAmount;
 		}
 	}
 }
