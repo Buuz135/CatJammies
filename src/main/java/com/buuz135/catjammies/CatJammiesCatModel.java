@@ -14,7 +14,7 @@ public class CatJammiesCatModel<T extends Cat> extends CatModel<T> {
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		int jamAmount = IJammyDetector.DETECTORS.stream().map((iJammyDetector) -> {
-			return iJammyDetector.detect(entity.level, entity);
+			return iJammyDetector.detect(entity.level(), entity);
 		}).mapToInt((value) -> {
 			return value;
 		}).sum();

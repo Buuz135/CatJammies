@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 
 group = 'com.buuz135'
-version = "1.19.4-1.5.0"
+version = "1.20.1-1.6.0"
 
 java {
     archivesBaseName = 'catjammies'
@@ -20,7 +20,7 @@ java {
 
 minecraft {
 
-    mappings channel: "official", version: "1.19.4"
+    mappings channel: "official", version: "1.20.1"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
 

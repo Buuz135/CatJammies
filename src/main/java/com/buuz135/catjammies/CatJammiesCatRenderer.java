@@ -37,7 +37,7 @@ public class CatJammiesCatRenderer extends MobRenderer<Cat, CatModel<Cat>> {
 			poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.rotLerp(f, 0.0F, 90.0F)));
 			BlockPos blockpos = cat.blockPosition();
 
-			for (Player playerentity : cat.level.getEntitiesOfClass(Player.class, (new AABB(blockpos)).inflate(2.0, 2.0, 2.0))) {
+			for (Player playerentity : cat.level().getEntitiesOfClass(Player.class, (new AABB(blockpos)).inflate(2.0, 2.0, 2.0))) {
 				if (playerentity.isSleeping()) {
 					poseStack.translate((double) (0.15F * f), 0.0, 0.0);
 					break;
