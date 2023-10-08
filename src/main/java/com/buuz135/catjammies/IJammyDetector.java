@@ -19,7 +19,7 @@ public interface IJammyDetector {
 		AABB aabb = new AABB(entity.getX() - (double) jamDistance, entity.getY() - (double) jamDistance, entity.getZ() - (double) jamDistance, entity.getX() + (double) jamDistance, entity.getY() + (double) jamDistance, entity.getZ() + (double) jamDistance);
 
 		for (BlockPos blockPos : getBlockPosInAABB(aabb)) {
-			if (entity.level.getBlockState(blockPos).getBlock() instanceof JukeboxBlock && entity.level.getBlockState(blockPos).getValue(JukeboxBlock.HAS_RECORD)) {
+			if (entity.level().getBlockState(blockPos).getBlock() instanceof JukeboxBlock && entity.level().getBlockState(blockPos).getValue(JukeboxBlock.HAS_RECORD)) {
 				++jamAmount;
 			}
 		}
