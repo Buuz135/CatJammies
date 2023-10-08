@@ -40,7 +40,7 @@ public interface IJammyDetector {
 		for (double y = aabb.minY; y < aabb.maxY; ++y) {
 			for (double x = aabb.minX; x < aabb.maxX; ++x) {
 				for (double z = aabb.minZ; z < aabb.maxZ; ++z) {
-					blocks.add(new BlockPos(x, y, z));
+					blocks.add(BlockPos.containing(x, y, z));
 				}
 			}
 		}

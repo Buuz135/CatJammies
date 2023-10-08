@@ -1,7 +1,7 @@
 package com.buuz135.catjammies;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -34,7 +34,7 @@ public class CatJammiesCatRenderer extends MobRenderer<Cat, CatModel<Cat>> {
 		float f = cat.getLieDownAmount(partialTicks);
 		if (f > 0.0F) {
 			poseStack.translate((double) (0.4F * f), (double) (0.15F * f), (double) (0.1F * f));
-			poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.rotLerp(f, 0.0F, 90.0F)));
+			poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.rotLerp(f, 0.0F, 90.0F)));
 			BlockPos blockpos = cat.blockPosition();
 
 			for (Player playerentity : cat.level.getEntitiesOfClass(Player.class, (new AABB(blockpos)).inflate(2.0, 2.0, 2.0))) {
