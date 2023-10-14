@@ -10,6 +10,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.ArrayList;
 import java.util.List;
 
+@FunctionalInterface
 public interface IJammyDetector {
 
 	List<IJammyDetector> DETECTORS = new ArrayList<>();
@@ -32,6 +33,13 @@ public interface IJammyDetector {
 		return level.getEntitiesOfClass(Player.class, aabb, (playerEntity) -> playerEntity.getDisplayName().getString().equals("Buuz135")).size();
 	};
 
+	/**
+	 * Detects whether a cat can jam.
+	 *
+	 * @param level the level the cat is within
+	 * @param cat the cat trying to jam
+	 * @return a multiplier which determines how hard the cat can jam.
+	 */
 	int detect(Level level, Cat cat);
 
 	static List<BlockPos> getBlockPosInAABB(AABB aabb) {
