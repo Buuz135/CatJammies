@@ -1,22 +1,21 @@
 package com.buuz135.catjammies;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.mojang.logging.LogUtils;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import org.slf4j.Logger;
 
 @Mod("catjammies")
 public class CatJammies {
 
-	private static final Logger LOGGER = LogManager.getLogger();
+	private static final Logger LOGGER = LogUtils.getLogger();
 
-	public CatJammies() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> eventBus.addListener(this::doClientStuff));
+	public CatJammies(IEventBus eventBus, Dist dist) {
+		if (dist.isClient()){
+			eventBus.addListener(this::doClientStuff);
+		}
 	}
 
 	private void doClientStuff(FMLClientSetupEvent event) {
